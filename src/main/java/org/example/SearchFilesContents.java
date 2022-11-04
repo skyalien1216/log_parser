@@ -1,5 +1,7 @@
 package org.example;
 
+import me.tongfei.progressbar.ProgressBar;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -9,11 +11,26 @@ public class SearchFilesContents {
     public static Map<String, String> analyze(Map<String, String> m, String regex) {
         var filtered = new HashMap<String, String>();
         Pattern p = Pattern.compile(regex, Pattern.MULTILINE);
+
         for (var el: m.entrySet()) {
             var matcher = p.matcher(el.getValue());
             StringBuilder s = new StringBuilder();
-            while (matcher.find())
-                s.append(matcher.group()).append('\n');
+            ProgressBar pb = new ProgressBar("Analyzing " + el.getKey(), el.getValue().length());
+
+            while (matcher.find()) {
+                var tmp = matcher.group();
+                pb.stepBy(el.getValue().indexOf(tmp.charAt(tmp.length() - 1)));
+                s.append(tmp).append('\n');
+                /*// uncomment to see the progress bar in action
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }*/
+            }
+            pb.stepTo(pb.getMax());
+            pb.close();
+
             filtered.put(el.getKey(), s.toString());
         }
         return filtered;

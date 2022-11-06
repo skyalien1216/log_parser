@@ -10,12 +10,12 @@ public class Main {
     public static void main(@NotNull String[] args) {
         String filesRegex = ".+\\.log";
         String fileContentsRegex = "^.*Warning.*$";
-        var m = FileReader.read(Path.of(args[0]), filesRegex);
-        var p = SearchFilesContents.analyze(m, fileContentsRegex);
+        var filesToAnalyze = FileReader.read(Path.of(args[0]), filesRegex);
+        var AllTheMatches = SearchFilesContents.analyze(filesToAnalyze, fileContentsRegex);
 
         try {
             FileWriter myWriter = new FileWriter("logInfo.txt");
-            for (var f : p.entrySet()) {
+            for (var f : AllTheMatches.entrySet()) {
                 myWriter.write(f.getKey() + '\n');
                 myWriter.write(f.getValue() + '\n');
                 myWriter.write('\n');

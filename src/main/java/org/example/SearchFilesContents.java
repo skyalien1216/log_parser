@@ -19,14 +19,14 @@ public class SearchFilesContents {
 
             while (matcher.find()) {
                 var tmp = matcher.group();
-                pb.stepBy(el.getValue().indexOf(tmp.charAt(tmp.length() - 1)));
+                pb.stepTo(matcher.end());
                 s.append(tmp).append('\n');
-                /*// uncomment to see the progress bar in action
+                // uncomment to see the progress bar in action
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(3);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
-                }*/
+                }
             }
             pb.stepTo(pb.getMax());
             pb.close();

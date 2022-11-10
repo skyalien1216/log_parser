@@ -8,8 +8,8 @@ import java.nio.file.Path;
 
 public class Main {
     public static void main(@NotNull String[] args) {
-        String filesRegex = ".+\\.log";
-        String fileContentsRegex = "^.*Warning.*$";
+        String filesRegex = args[1];
+        String fileContentsRegex = args[2];
         var filesToAnalyze = FileReader.read(Path.of(args[0]), filesRegex);
         var AllTheMatches = SearchFilesContents.analyze(filesToAnalyze, fileContentsRegex);
 

@@ -21,12 +21,12 @@ public class SearchFilesContents {
                 var tmp = matcher.group();
                 pb.stepTo(matcher.end());
                 s.append(tmp).append('\n');
-                // uncomment to see the progress bar in action
+                /*// uncomment to see the progress bar in action
                 try {
-                    Thread.sleep(3);
+                    Thread.sleep(10);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
-                }
+                }*/
             }
             pb.stepTo(pb.getMax());
             pb.close();
